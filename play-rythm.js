@@ -1,19 +1,13 @@
 let context = new (window.AudioContext || window.webkitAudioContext)();
 
-function playSound(url) {
+function loadSound(url, sound) {
   let xhr = new XMLHttpRequest();
   let buffer;
-  let source = context.createBufferSource();
-  source.connect(context.destination);
   xhr.open('GET', url, true);
   xhr.responseType = 'arraybuffer';
   
   xhr.onload = function() {
-    buffer = xhr.response;
-    context.decodeAudioData(buffer, function(decoded) {
-      source.buffer = decoded;
-    });
-    source.start();
+    sound = xhr.response;
   }
   xhr.send();
   // return buffer;
